@@ -13,6 +13,8 @@ using WebApiLivros9.Infra.Data.Context;
 using WebApiLivros9.Infra.Data.Repositories;
 using AutoMapper;
 using WebApiLivros9.Application.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace WebApiLivros9.Infra.Ioc
 {
@@ -24,6 +26,27 @@ namespace WebApiLivros9.Infra.Ioc
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
                     b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName));
+            });
+
+            services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }
+            ).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+
+                    ValidIssuer = configuration["jwt:issuer"],
+                    ValidAudience = configuration["jwt:audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(configuration["jwt:secretKey"])),
+                    ClockSkew = TimeSpan.Zero
+                };
             });
 
             services.AddAutoMapper(typeof(DomainToDTOMappingProfile));

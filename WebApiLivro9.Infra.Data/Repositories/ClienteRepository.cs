@@ -47,5 +47,9 @@ namespace WebApiLivros9.Infra.Data.Repositories
         {
             return await _context.Cliente.FirstOrDefaultAsync(x => x.Id == id);
         }
+        //public async Task<Cliente> SelecionarAsync(int id)
+        //{
+        //    return await _context.Cliente.FirstOrDefaultAsync(x => x.Id == id);
+        //}
     }
 }

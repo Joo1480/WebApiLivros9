@@ -40,10 +40,10 @@ namespace WebApiLivros9.Domain.Entities
             ValidateDomain(CPF, nome, endereco, cidade, bairro, numero, telefoneCelular, telefoneFixo);
         }
 
-        public void ValidateDomain(string CPF, string nome, string endereco,
+        public void ValidateDomain(string Cpf, string nome, string endereco,
             string cidade, string bairro, string numero, string telefoneCelular, string telefoneFixo)
         {
-            DomainExceptionValidation.When(CPF.Length != 11, "O CPF deve ter 11 caracteres.");
+            DomainExceptionValidation.When(Cpf.Length != 11, "O CPF deve ter 11 caracteres.");
             DomainExceptionValidation.When(nome.Length > 200, "O Nome deve ter, no máximo, 200 caracteres.");
             DomainExceptionValidation.When(endereco.Length > 50, "O endereço deve ter, no máximo, 50 caracteres.");
             DomainExceptionValidation.When(cidade.Length > 50, "A cidade deve ter, no máximo, 50 caracteres.");
@@ -52,7 +52,7 @@ namespace WebApiLivros9.Domain.Entities
             DomainExceptionValidation.When(telefoneCelular.Length > 11, "O celular deve ter, no máximo, 11 caracteres.");
             DomainExceptionValidation.When(telefoneFixo.Length > 11, "O telefone fixo deve ter, no máximo, 10 caracteres.");
 
-            CPF = CPF;
+            CPF = Cpf;
             Nome = nome;
             Endereco = endereco;
             Cidade = cidade;

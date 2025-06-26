@@ -13,5 +13,6 @@ namespace WebApiLivros9.Domain.Interfaces
         Task<Cliente> Alterar(Cliente model);
         Task<Cliente> Excluir(int id);
         Task<Cliente> SelecionarAsync(int id);
+        Task<IEnumerable<Cliente>> SelecionarTodosAsync();
     }
 }

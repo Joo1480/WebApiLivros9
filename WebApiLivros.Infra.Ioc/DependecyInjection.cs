@@ -15,6 +15,8 @@ using AutoMapper;
 using WebApiLivros9.Application.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using WebApiLivros9.Domain.Account;
+using WebApiLivros9.Infra.Data.Identity;
 
 namespace WebApiLivros9.Infra.Ioc
 {
@@ -40,6 +42,7 @@ namespace WebApiLivros9.Infra.Ioc
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
 
                     ValidIssuer = configuration["jwt:issuer"],
                     ValidAudience = configuration["jwt:audience"],
@@ -51,9 +54,14 @@ namespace WebApiLivros9.Infra.Ioc
 
             services.AddAutoMapper(typeof(DomainToDTOMappingProfile));
 
+            //Repositories
             services.AddScoped<IClienteRepository, ClienteRepository>();
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
+            //Services
             services.AddScoped<IClienteService, ClienteService>();
+            services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddScoped<IAuthenticate, AuthenticateService>();
 
             return services;
         }

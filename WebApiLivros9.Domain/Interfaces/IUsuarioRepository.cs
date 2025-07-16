@@ -7,7 +7,7 @@ using WebApiLivros9.Domain.Entities;
 
 namespace WebApiLivros9.Domain.Interfaces
 {
-    public  interface IUsuarioRepository
+    public interface IUsuarioRepository
     {
         Task<Usuario> Incluir(Usuario model);
         Task<Usuario> Alterar(Usuario model);

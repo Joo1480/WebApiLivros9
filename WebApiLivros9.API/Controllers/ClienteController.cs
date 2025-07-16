@@ -5,8 +5,8 @@ using WebApiLivros9.Domain.Interfaces;
 
 namespace WebApiLivros9.API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class ClienteController : Controller
     {
         private readonly IClienteService _clienteService;

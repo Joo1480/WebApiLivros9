@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebApiLivros9.Domain.Entities;
 
 namespace WebApiLivros9.Domain.Account
 {
@@ -11,6 +12,7 @@ namespace WebApiLivros9.Domain.Account
         Task<bool> AuthenticateAsync(string email, string senha);
         Task<bool> UserExists(string email);
         public string GenerateToken(int id, string email);
+        public Task<Usuario> GetUserbyEmail(string email);
 
     }
 }

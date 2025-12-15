@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using WebApiLivros9.Domain.Account;
+using WebApiLivros9.Domain.Entities;
 using WebApiLivros9.Infra.Data.Context;
 
 namespace WebApiLivros9.Infra.Data.Identity
@@ -67,6 +68,11 @@ namespace WebApiLivros9.Infra.Data.Identity
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        public async Task<Usuario> GetUserbyEmail(string email)
+        {
+            return await _context.Usuario.Where(x => x.Email.ToLower() == email.ToLower()).FirstOrDefaultAsync();
         }
 
         public async Task<bool> UserExists(string email)

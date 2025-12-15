@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using WebApiLivros9.Application.DTOs;
@@ -37,6 +38,16 @@ namespace WebApiLivros9.Application.Services
         public async Task<UsuarioDTO> Incluir(UsuarioDTO modelDTO)
         {
             var usuario = _mapper.Map<Usuario>(modelDTO);
+
+            if (modelDTO.Password != null)
+            {
+                using var hmac = new HMACSHA512();
+                byte[] passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(modelDTO.Password));
+                byte[] passwordSalt = hmac.Key;
+
+                usuario.AlterarSenha(passwordHash, passwordSalt);
+            }
+
             var usuarioIncluido = await _repository.Incluir(usuario);
             return _mapper.Map<UsuarioDTO>(usuarioIncluido);
         }

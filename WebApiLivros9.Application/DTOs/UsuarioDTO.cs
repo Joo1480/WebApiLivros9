@@ -25,5 +25,9 @@ namespace WebApiLivros9.Application.DTOs
         [MinLength(8, ErrorMessage = "A senha não pode ter menos de 8 caracteres")]
         [NotMapped]
         public string Password { get; set; }
+        [NotMapped]
+        public byte[]? PasswordHash { get; private set; }
+        [NotMapped]
+        public byte[]? PasswordSalt { get; private set; }
     }
 }

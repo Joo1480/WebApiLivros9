@@ -12,6 +12,7 @@ namespace WebApiLivros9.Domain.Entities
         public int Id { get; private set; }
         public string Nome { get; private set; }
         public string Email { get; private set; }
+        public bool IsAdmin { get; private set; }
         public byte[] PasswordHash { get; private set; }
         public byte[] PasswordSalt { get; private set; }
 
@@ -25,6 +26,12 @@ namespace WebApiLivros9.Domain.Entities
         {
             ValidateDomain(nome, email);
         }
+
+        public void SetAdmin(bool isAdmin)
+        {
+            IsAdmin = isAdmin;
+        }
+
         public void AlterarSenha(byte[] passwordHash, byte[] passwordSalt)
         {
             PasswordHash = passwordHash;
@@ -38,7 +45,7 @@ namespace WebApiLivros9.Domain.Entities
             DomainExceptionValidation.When(email.Length > 250, "O email não pode ultrapassar 250 caracteres");
             Nome = nome;
             Email = email;
-
+            IsAdmin = false;
         }
     }
 }

@@ -49,7 +49,7 @@ namespace WebApiLivros9.Infra.Data.Identity
             var claims = new[]
             {
                 new Claim("id", id.ToString()),
-                new Claim("email", email),
+                new Claim("email", email.ToLower()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 

@@ -3,22 +3,25 @@ using Microsoft.AspNetCore.Mvc;
 using WebApiLivros9.Application.DTOs;
 using WebApiLivros9.Application.Interfaces;
 using WebApiLivros9.Domain.Interfaces;
+using WebApiLivros9.Infra.Ioc;
 
 namespace WebApiLivros9.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class ClienteController : Controller
     {
         private readonly IClienteService _clienteService;
+        private readonly IUsuarioService _usuarioService;
 
-        public ClienteController(IClienteService clienteService)
+        public ClienteController(IClienteService clienteService, IUsuarioService usuarioService)
         {
             _clienteService = clienteService;
+            _usuarioService = usuarioService;
         }
 
         [HttpPost]
-        [Authorize]
         public async Task<ActionResult> Incluir(ClienteDTO clienteDTO)
         {
             var clienteDTOIncluido = await _clienteService.Incluir(clienteDTO);
@@ -42,6 +45,14 @@ namespace WebApiLivros9.API.Controllers
         [HttpDelete]
         public async Task<ActionResult> Excluir(int id)
         {
+            var userId = User.Getid();
+            var usuario = await _usuarioService.SelecionarAsync(userId);
+
+            if(!usuario.IsAdmin)
+            {
+                return Unauthorized("Você não tem permissão para excluir clientes.");
+            }
+
             var clienteDTOExcluido = await _clienteService.Excluir(id);
             if (clienteDTOExcluido == null)
             {

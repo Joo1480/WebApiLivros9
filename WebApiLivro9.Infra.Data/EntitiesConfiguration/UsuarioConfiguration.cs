@@ -16,6 +16,7 @@ namespace WebApiLivros9.Infra.Data.EntitiesConfiguration
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Email).HasMaxLength(200).IsRequired();
             builder.Property(x => x.Nome).HasMaxLength(250).IsRequired();
+            builder.Property(x => x.IsAdmin).IsRequired();
         }
     }
 }

@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace WebApiLivros9.Application.DTOs
@@ -29,5 +30,7 @@ namespace WebApiLivros9.Application.DTOs
         public byte[]? PasswordHash { get; private set; }
         [NotMapped]
         public byte[]? PasswordSalt { get; private set; }
+        [JsonIgnore]
+        public bool IsAdmin { get; set; }
     }
 }

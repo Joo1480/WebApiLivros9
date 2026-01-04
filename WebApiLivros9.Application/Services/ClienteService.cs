@@ -46,9 +46,10 @@ namespace WebApiLivros9.Application.Services
             var cliente = await _repository.SelecionarAsync(id);
             return _mapper.Map<ClienteDTO>(cliente);
         }
-        public Task<IEnumerable<ClienteDTO>> SelecionarTodosAsync()
+        public async Task<IEnumerable<ClienteDTO>> SelecionarTodosAsync()
         {
-            throw new NotImplementedException();
+            var clientes = await _repository.SelecionarTodosAsync();
+            return _mapper.Map<IEnumerable<ClienteDTO>>(clientes);
         }
     }
 }

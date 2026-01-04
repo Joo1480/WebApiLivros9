@@ -66,7 +66,7 @@ namespace WebApiLivros9.API.Controllers
             var clienteDTO = await _clienteService.SelecionarAsync(id);
             if (clienteDTO == null)
             {
-                return BadRequest("Cliente não encontrado");
+                return NotFound("Cliente não encontrado");
             }
             return Ok(clienteDTO);
         }

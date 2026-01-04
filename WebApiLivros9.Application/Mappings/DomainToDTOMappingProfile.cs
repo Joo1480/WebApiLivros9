@@ -15,6 +15,7 @@ namespace WebApiLivros9.Application.Mappings
         public DomainToDTOMappingProfile() { 
             CreateMap<Cliente, ClienteDTO>().ReverseMap();
             CreateMap<Usuario, UsuarioDTO>().ReverseMap();
+            CreateMap<Livro, LivroDTO>().ReverseMap();
         }
     }
 }

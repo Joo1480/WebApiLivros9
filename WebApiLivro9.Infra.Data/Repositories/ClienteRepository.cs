@@ -45,7 +45,7 @@ namespace WebApiLivros9.Infra.Data.Repositories
         }
         public async Task<Cliente> SelecionarAsync(int id)
         {
-            return await _context.Cliente.FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.Cliente.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         }
         public async Task<IEnumerable<Cliente>> SelecionarTodosAsync()
         {

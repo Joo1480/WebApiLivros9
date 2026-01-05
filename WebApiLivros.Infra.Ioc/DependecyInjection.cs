@@ -58,12 +58,14 @@ namespace WebApiLivros9.Infra.Ioc
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<ILivroRepository, LivroRepository>();
+            services.AddScoped<IEmprestimoRepository, EmprestimoRepository>();
 
             //Services
             services.AddScoped<IClienteService, ClienteService>();
             services.AddScoped<IUsuarioService, UsuarioService>();
             services.AddScoped<IAuthenticate, AuthenticateService>();
             services.AddScoped<ILivroService, LivroService>();
+            services.AddScoped<IEmprestimoService, EmprestimoService>();
 
             return services;
         }

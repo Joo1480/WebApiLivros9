@@ -21,6 +21,7 @@ namespace WebApiLivros9.Domain.Entities
         public Emprestimo(int id, int seqCliente, int seqLivro, DateTime dataEmprestimo, DateTime dataEntrega,bool entregue) 
         {
             DomainExceptionValidation.When(id < 0, "Id do empréstimo deve ser positivo");
+            Id = id;
             ValidateDomain(seqCliente,seqLivro,dataEmprestimo,dataEntrega,entregue);
         }
 

@@ -9,7 +9,7 @@ namespace WebApiLivros9.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
+    //[Authorize]
     public class ClienteController : Controller
     {
         private readonly IClienteService _clienteService;

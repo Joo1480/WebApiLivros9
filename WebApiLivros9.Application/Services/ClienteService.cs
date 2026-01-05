@@ -8,6 +8,7 @@ using WebApiLivros9.Application.DTOs;
 using WebApiLivros9.Application.Interfaces;
 using WebApiLivros9.Domain.Entities;
 using WebApiLivros9.Domain.Interfaces;
+using WebApiLivros9.Domain.Pagination;
 
 namespace WebApiLivros9.Application.Services
 {
@@ -46,10 +47,12 @@ namespace WebApiLivros9.Application.Services
             var cliente = await _repository.SelecionarAsync(id);
             return _mapper.Map<ClienteDTO>(cliente);
         }
-        public async Task<IEnumerable<ClienteDTO>> SelecionarTodosAsync()
+        public async Task<PagedList<ClienteDTO>> SelecionarTodosAsync(int pageNumber, int pageSize)
         {
-            var clientes = await _repository.SelecionarTodosAsync();
-            return _mapper.Map<IEnumerable<ClienteDTO>>(clientes);
+            var clientes = await _repository.SelecionarTodosAsync(pageNumber, pageSize);
+            var clientesDTO = _mapper.Map<IEnumerable<ClienteDTO>>(clientes);
+
+            return new PagedList<ClienteDTO>(clientesDTO, pageNumber, pageSize, clientes.TotalCount);
         }
     }
 }

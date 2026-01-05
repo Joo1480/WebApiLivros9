@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebApiLivros9.API.Extensions;
+using WebApiLivros9.API.Models;
 using WebApiLivros9.Application.DTOs;
 using WebApiLivros9.Application.Interfaces;
 using WebApiLivros9.Domain.Interfaces;
@@ -71,9 +73,11 @@ namespace WebApiLivros9.API.Controllers
             return Ok(clienteDTO);
         }
         [HttpGet]
-        public async Task<ActionResult> SelecionarTodos()
+        public async Task<ActionResult> SelecionarTodos([FromQuery] PaginationParams paginationParams)
         {
-            var clientesDTO = await _clienteService.SelecionarTodosAsync();
+            var clientesDTO = await _clienteService.SelecionarTodosAsync(paginationParams.PageNumber, paginationParams.PageSize);
+
+            Response.AddPaginationHeader(new PaginationHeader(clientesDTO.CurrentPage, clientesDTO.PageSize, clientesDTO.TotalCount, clientesDTO.TotalPages));
 
             return Ok(clientesDTO);
         }

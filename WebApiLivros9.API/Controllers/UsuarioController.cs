@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebApiLivros9.API.Models;
 using WebApiLivros9.Application.DTOs;
 using WebApiLivros9.Application.Interfaces;
 using WebApiLivros9.Domain.Account;
+using WebApiLivros9.Infra.Ioc;
 
 namespace WebApiLivros9.API.Controllers
 {
@@ -33,6 +35,25 @@ namespace WebApiLivros9.API.Controllers
             if (emailExiste)
             {
                 return BadRequest("Este e-mail já possui um cadastro.");
+            }
+
+            var existeUsuarioSistema = await _usuarioService.ExisteUsuarioCadastradoAsync();
+            if (!existeUsuarioSistema)
+            {
+                usuarioDTO.IsAdmin = true;
+            }
+            else
+            {
+                if (User.FindFirst("id") == null)
+                {
+                    return Unauthorized();
+                }
+                var userId = User.Getid();
+                var user = await _usuarioService.SelecionarAsync(userId);
+                if (!user.IsAdmin)
+                {
+                    return Unauthorized("Você não tem permissão para incluir novos usuários!");
+                }
             }
 
             var usuario = await _usuarioService.Incluir(usuarioDTO);

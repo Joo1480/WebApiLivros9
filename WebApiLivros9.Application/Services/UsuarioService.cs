@@ -34,7 +34,6 @@ namespace WebApiLivros9.Application.Services
             var usuario = await _repository.Excluir(id);
             return _mapper.Map<UsuarioDTO>(usuario);
         }
-
         public async Task<UsuarioDTO> Incluir(UsuarioDTO modelDTO)
         {
             var usuario = _mapper.Map<Usuario>(modelDTO);
@@ -62,6 +61,10 @@ namespace WebApiLivros9.Application.Services
         {
             var usuarios = await _repository.SelecionarTodosAsync();
             return _mapper.Map<IEnumerable<UsuarioDTO>>(usuarios);
+        }
+        public async Task<bool> ExisteUsuarioCadastradoAsync()
+        {
+            return await _repository.ExisteUsuarioCadastradoAsync();
         }
     }
 }

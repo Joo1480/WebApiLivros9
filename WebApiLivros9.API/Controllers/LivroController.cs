@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebApiLivros9.Application.DTOs;
 using WebApiLivros9.Application.Interfaces;
 using WebApiLivros9.Infra.Ioc;
@@ -7,6 +8,7 @@ namespace WebApiLivros9.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class LivroController : Controller
     {
 

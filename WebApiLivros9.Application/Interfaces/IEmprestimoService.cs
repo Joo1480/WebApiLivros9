@@ -15,5 +15,6 @@ namespace WebApiLivros9.Application.Interfaces
         Task<EmprestimoDTO> Excluir(int id);
         Task<EmprestimoDTO> SelecionarAsync(int id);
         Task<IEnumerable<EmprestimoDTO>> SelecionarTodosAsync();
+        Task<bool> VerificaDisponibilidadeAsync(int seqLivro);
     }
 }

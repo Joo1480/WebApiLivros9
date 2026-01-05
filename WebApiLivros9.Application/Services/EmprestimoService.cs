@@ -51,5 +51,11 @@ namespace WebApiLivros9.Application.Services
             var emprestimos = await _repository.SelecionarTodosAsync();
             return _mapper.Map<IEnumerable<EmprestimoDTO>>(emprestimos);
         }
+
+        public async Task<bool> VerificaDisponibilidadeAsync(int seqLivro)
+        {
+            return await _repository.VerificaDisponibilidadeAsync(seqLivro);
+            
+        }
     }
 }

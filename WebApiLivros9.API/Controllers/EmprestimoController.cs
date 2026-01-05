@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebApiLivros9.Application.DTOs;
 using WebApiLivros9.Application.Interfaces;
 using WebApiLivros9.Infra.Ioc;
@@ -7,6 +8,7 @@ namespace WebApiLivros9.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class EmprestimoController : Controller
     {
         private readonly IEmprestimoService _emprestimoService;
@@ -19,6 +21,13 @@ namespace WebApiLivros9.API.Controllers
         [HttpPost]
         public async Task<ActionResult> Incluir(EmprestimoPostDTO emprestimoPostDTO)
         {
+            var disponivel = await _emprestimoService.VerificaDisponibilidadeAsync(emprestimoPostDTO.SeqLivro);
+
+            if (!disponivel)
+            {
+                return BadRequest("O livro não está disponível para empréstimo.");
+            }
+
             emprestimoPostDTO.DataEmprestimo = DateTime.Now;
             emprestimoPostDTO.Entregue = false;
             var emprestimoDTOIncluido = await _emprestimoService.Incluir(emprestimoPostDTO);

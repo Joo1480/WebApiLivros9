@@ -51,5 +51,12 @@ namespace WebApiLivros9.Infra.Data.Repositories
         {
             return await _context.Emprestimo.Include(x => x.Cliente).Include(y => y.Livro).ToListAsync();
         }
+
+        public async Task<bool> VerificaDisponibilidadeAsync(int seqLivro)
+        {
+            var existeEmprestimo = await _context.Emprestimo.Where(x => x.SeqLivro == seqLivro && x.Entregue == false).AnyAsync();
+
+            return !existeEmprestimo;
+        }
     }
 }

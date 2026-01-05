@@ -51,5 +51,10 @@ namespace WebApiLivros9.Infra.Data.Repositories
         {
             return await _context.Usuario.ToListAsync();
         }
+
+        public async Task<bool> ExisteUsuarioCadastradoAsync()
+        {
+            return await _context.Usuario.AnyAsync();
+        }
     }
 }

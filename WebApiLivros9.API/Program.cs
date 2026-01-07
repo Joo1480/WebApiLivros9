@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using System;
+using WebApiLivros9.API.Middleware;
 using WebApiLivros9.Infra.Ioc;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,6 +34,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 

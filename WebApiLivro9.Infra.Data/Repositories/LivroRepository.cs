@@ -6,7 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using WebApiLivros9.Domain.Entities;
 using WebApiLivros9.Domain.Interfaces;
+using WebApiLivros9.Domain.Pagination;
 using WebApiLivros9.Infra.Data.Context;
+using WebApiLivros9.Infra.Data.Helpers;
 
 namespace WebApiLivros9.Infra.Data.Repositories
 {
@@ -47,9 +49,10 @@ namespace WebApiLivros9.Infra.Data.Repositories
         {
             return await _context.Livro.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         }
-        public async Task<IEnumerable<Livro>> SelecionarTodosAsync()
+        public async Task<PagedList<Livro>> SelecionarTodosAsync(int pageNumber, int pageSize)
         {
-            return await _context.Livro.ToListAsync();
+            var query = _context.Livro.AsQueryable();
+            return await PaginationHelper.CreateAsync(query, pageNumber, pageSize);
         }
     }
 }

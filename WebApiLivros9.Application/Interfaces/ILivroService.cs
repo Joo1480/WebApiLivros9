@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebApiLivros9.Application.DTOs;
+using WebApiLivros9.Domain.Pagination;
 
 namespace WebApiLivros9.Application.Interfaces
 {
@@ -13,6 +14,6 @@ namespace WebApiLivros9.Application.Interfaces
         Task<LivroDTO> Alterar(LivroDTO livroDTO);
         Task<LivroDTO> Excluir(int id);
         Task<LivroDTO> SelecionarAsync(int id);
-        Task<IEnumerable<LivroDTO>> SelecionarTodosAsync();
+        Task<PagedList<LivroDTO>> SelecionarTodosAsync(int pageNumber, int pageSize);
     }
 }

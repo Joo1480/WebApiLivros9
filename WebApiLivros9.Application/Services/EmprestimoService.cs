@@ -8,6 +8,7 @@ using WebApiLivros9.Application.DTOs;
 using WebApiLivros9.Application.Interfaces;
 using WebApiLivros9.Domain.Entities;
 using WebApiLivros9.Domain.Interfaces;
+using WebApiLivros9.Domain.Pagination;
 
 namespace WebApiLivros9.Application.Services
 {
@@ -46,10 +47,11 @@ namespace WebApiLivros9.Application.Services
             var emprestimo = await _repository.SelecionarAsync(id);
             return _mapper.Map<EmprestimoDTO>(emprestimo);
         }
-        public async Task<IEnumerable<EmprestimoDTO>> SelecionarTodosAsync()
+        public async Task<PagedList<EmprestimoDTO>> SelecionarTodosAsync(int pageNumber, int pageSize)
         {
-            var emprestimos = await _repository.SelecionarTodosAsync();
-            return _mapper.Map<IEnumerable<EmprestimoDTO>>(emprestimos);
+            var emprestimos = await _repository.SelecionarTodosAsync(pageNumber, pageSize);
+            var emprestimosDTO = _mapper.Map<IEnumerable<EmprestimoDTO>>(emprestimos);
+            return new PagedList<EmprestimoDTO>(emprestimosDTO, pageNumber, pageSize, emprestimos.TotalCount);
         }
 
         public async Task<bool> VerificaDisponibilidadeAsync(int seqLivro)

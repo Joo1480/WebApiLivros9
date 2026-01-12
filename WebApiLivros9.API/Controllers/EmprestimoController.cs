@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebApiLivros9.API.Extensions;
+using WebApiLivros9.API.Models;
 using WebApiLivros9.Application.DTOs;
 using WebApiLivros9.Application.Interfaces;
 using WebApiLivros9.Infra.Ioc;
@@ -78,11 +80,13 @@ namespace WebApiLivros9.API.Controllers
             return Ok(emprestimoDTO);
         }
         [HttpGet]
-        public async Task<ActionResult> SelecionarTodos()
+        public async Task<ActionResult> SelecionarTodos([FromQuery]PaginationParams paginationParams)
         {
-            var emprestimosDTO = await _emprestimoService.SelecionarTodosAsync();
+            var emprestimoDTO = await _emprestimoService.SelecionarTodosAsync(paginationParams.PageNumber, paginationParams.PageSize);
 
-            return Ok(emprestimosDTO);
+            Response.AddPaginationHeader(new PaginationHeader(paginationParams.PageNumber, paginationParams.PageSize, emprestimoDTO.TotalCount, emprestimoDTO.TotalPages));
+
+            return Ok(emprestimoDTO);
         }
     }
 }

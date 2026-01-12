@@ -90,7 +90,9 @@ namespace WebApiLivros9.API.Controllers
 
             return new UserToken
             {
-                Token = token
+                Token = token, 
+                IsAdmin = usuario.IsAdmin,
+                Email = usuario.Email
             };
         }
     }

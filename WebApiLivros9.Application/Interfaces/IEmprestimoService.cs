@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WebApiLivros9.Application.DTOs;
 using WebApiLivros9.Domain.Entities;
+using WebApiLivros9.Domain.Pagination;
 
 namespace WebApiLivros9.Application.Interfaces
 {
@@ -14,7 +15,7 @@ namespace WebApiLivros9.Application.Interfaces
         Task<EmprestimoDTO> Alterar(EmprestimoDTO modelDTO);
         Task<EmprestimoDTO> Excluir(int id);
         Task<EmprestimoDTO> SelecionarAsync(int id);
-        Task<IEnumerable<EmprestimoDTO>> SelecionarTodosAsync();
+        Task<PagedList<EmprestimoDTO>> SelecionarTodosAsync(int pageNumber, int pageSize);
         Task<bool> VerificaDisponibilidadeAsync(int seqLivro);
     }
 }

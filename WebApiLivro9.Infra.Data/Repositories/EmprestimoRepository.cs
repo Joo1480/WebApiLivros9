@@ -6,7 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using WebApiLivros9.Domain.Entities;
 using WebApiLivros9.Domain.Interfaces;
+using WebApiLivros9.Domain.Pagination;
 using WebApiLivros9.Infra.Data.Context;
+using WebApiLivros9.Infra.Data.Helpers;
 
 namespace WebApiLivros9.Infra.Data.Repositories
 {
@@ -47,9 +49,10 @@ namespace WebApiLivros9.Infra.Data.Repositories
         {
             return await _context.Emprestimo.Include(x => x.Cliente).Include(y => y.Livro).AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         }
-        public async Task<IEnumerable<Emprestimo>> SelecionarTodosAsync()
+        public async Task<PagedList<Emprestimo>> SelecionarTodosAsync(int pageNumber, int pageSize)
         {
-            return await _context.Emprestimo.Include(x => x.Cliente).Include(y => y.Livro).ToListAsync();
+            var query = _context.Emprestimo.Include(x => x.Cliente).Include(x => x.Livro).AsQueryable();
+            return await PaginationHelper.CreateAsync(query, pageNumber, pageSize);
         }
 
         public async Task<bool> VerificaDisponibilidadeAsync(int seqLivro)
